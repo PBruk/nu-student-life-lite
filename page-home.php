@@ -18,10 +18,10 @@ get_header(); ?>
 				if (have_posts()) : while (have_posts()) : the_post();
 
 					// are there any rows within within our flexible content?
-					if( have_rows('home_page_content') ):
+					if( have_rows('home_content') ):
 
 						// loop through all the rows of flexible content
-						while ( have_rows('home_page_content') ) : the_row();
+						while ( have_rows('home_content') ) : the_row();
 
 						?>
 
@@ -37,17 +37,29 @@ get_header(); ?>
 
 						</div><!-- .hero -->
 
-						<div class="main">
+						<div class="section--top">
 
 							<?php
 
 						// COLOR BLOCKS
 						if( get_row_layout() == 'color_blocks' )
-							get_template_part('partials/home', 'blocks');
+							get_template_part('partials/home', 'colorblocks');
 
 						// ICON BOXES
-						if( get_row_layout() == 'icon_boxes' )
-							get_template_part('partials/home', 'boxes');
+						if( get_row_layout() == 'icon_thirds' )
+							get_template_part('partials/home', 'iconboxes');
+
+						// DUAL-COLUMN IMAGES
+						if( get_row_layout() == 'dual_column_text_image' )
+							get_template_part('partials/home', 'columns');
+
+							?>
+
+						</div><!-- .section--top -->
+
+						<div class="section--bottom">
+
+							<?php
 
 						// CONTENT
 						if( get_row_layout() == 'full_width_text_box' )
@@ -55,7 +67,7 @@ get_header(); ?>
 
 							?>
 
-						</div><!-- .main -->
+						</div><!-- .section--bottom -->
 
 							<?php
 
