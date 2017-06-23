@@ -72,6 +72,27 @@ endif;
 add_action( 'after_setup_theme', 'nu_student_life_lite_setup' );
 
 /**
+ * Add preconnect for Google Fonts.
+ *
+ * @since Twenty Seventeen 1.0
+ *
+ * @param array  $urls           URLs to print for resource hints.
+ * @param string $relation_type  The relation type the URLs are printed.
+ * @return array $urls           URLs to print for resource hints.
+ */
+function nu_student_life_resource_hints( $urls, $relation_type ) {
+	if ( wp_style_is( 'nu-student-life-lite-fonts-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
+		$urls[] = array(
+			'href' => 'https://fonts.gstatic.com',
+			'crossorigin',
+		);
+	}
+
+	return $urls;
+}
+add_filter( 'wp_resource_hints', 'nu_student_life_resource_hints', 10, 2 );
+
+/**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.
@@ -105,6 +126,9 @@ add_action( 'widgets_init', 'nu_student_life_lite_widgets_init' );
  * Enqueue scripts and styles.
  */
 function nu_student_life_lite_scripts() {
+	// Enqueue Google Fonts: Oswald, Merriweather and Montserrat
+	wp_enqueue_style( 'nu-student-life-lite-fonts', 'https://fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i|Montserrat:400,800|Oswald:400,700' );
+
 	wp_enqueue_style( 'nu-student-life-lite-style', get_stylesheet_uri() );
 
 	wp_enqueue_script( 'nu-student-life-lite-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
